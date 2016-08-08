@@ -1,0 +1,15 @@
+package: github.com/almighty/almighty-test-runner
+homepage: https://github.com/almighty/almighty-test
+license: Apache-2.0
+import:
+- package: github.com/spf13/cobra
+- package: gopkg.in/yaml.v2
+- package: github.com/docker/engine-api
+  version: ^0.3.3
+testImport:
+- package: github.com/onsi/gomega
+  version: ^1.0.0
+- package: github.com/onsi/ginkgo
+  version: ^1.2.0
+  subpackages:
+  - ginkgo
