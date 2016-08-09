@@ -84,6 +84,29 @@ var _ = Describe("Test runner configuration", func() {
             configuration, _ := cfg.Read(configurationAsYAML)
 
             // when
+            products := cfg.ProductFor(cfg.VerticalSelection{Vertical: "runtime", Selection: "dropwizard"}, configuration.EnvironmentVerticals)
+
+            // when
+            Expect(products).To(HaveLen(5))
+            Expect(products).To(ConsistOf([][]string{
+                {"hsqldb", "dropwizard"},
+                {"oracle11g", "dropwizard"},
+                {"mysql", "dropwizard"},
+                {"postgresql", "dropwizard"},
+                {"mssql", "dropwizard"},
+            }))
+        })
+
+        It("Should provide combination of other verticles with selected verticle", func() {
+            // given
+            configurationAsYAML := `
+            verticals:
+                database: [hsqldb, oracle11g, mysql, postgresql, mssql]
+                runtime: [dropwizard, wildfly-swarm, express.js, goa]
+            `
+            configuration, _ := cfg.Read(configurationAsYAML)
+
+            // when
             products := cfg.Product(configuration.EnvironmentVerticals)
 
             // when

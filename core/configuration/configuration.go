@@ -19,6 +19,15 @@ type EnvironmentVerticals struct {
     Verticals map[string][]string `yaml:"verticals,flow"`
 }
 
+type VerticalSelection struct {
+    Vertical, Selection string
+}
+
+func ProductFor(s VerticalSelection, v EnvironmentVerticals) [][]string {
+    v.Verticals[s.Vertical] = []string{s.Selection}
+    return Product(v)
+}
+
 func Product(v EnvironmentVerticals) [][]string {
     values := make([][]interface{}, 0, len(v.Verticals))
     for _, value := range v.Verticals {
