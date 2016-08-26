@@ -84,7 +84,7 @@ var _ = Describe("Test runner configuration", func() {
             configuration, _ := cfg.Read(configurationAsYAML)
 
             // when
-            products := cfg.ProductFor(cfg.VerticalSelection{Vertical: "runtime", Selection: "dropwizard"}, configuration.EnvironmentVerticals)
+            products, _ := cfg.ProductFor(cfg.VerticalSelection{Vertical: "runtime", Selection: "dropwizard"}, configuration.EnvironmentVerticals)
 
             // when
             Expect(products).To(HaveLen(5))
@@ -107,7 +107,7 @@ var _ = Describe("Test runner configuration", func() {
             configuration, _ := cfg.Read(configurationAsYAML)
 
             // when
-            products := cfg.Product(configuration.EnvironmentVerticals)
+            products, _ := cfg.Product(configuration.EnvironmentVerticals)
 
             // when
             Expect(products).To(HaveLen(len(allProducts())))
