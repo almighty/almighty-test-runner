@@ -1,0 +1,52 @@
+= ALMighty Test Services
+
+This repository consists of testing services provided by ALMighty.
+
+== ALMighty Test Runner
+
+Key features
+
+* Running project build in different configurations
+
+Project itself depends on following tools, which are incorporated into the build process:
+
+* link:https://glide.sh/[glide] for dependency management
+* link:https://github.com/onsi/ginkgo[ginkgo] for testing
+
+=== Start hacking [[hacking]]
+
+You need to have following packages in place
+
+* `go` (>= v1.6)
+* `git`
+* `make`
+
+Assuming that you have all the link:https://golang.org/doc/install[Golang prerequisites] in place (such as `$GOPATH`), clone the repository first:
+
+[source,bash]
+----
+$ git clone https://github.com/almighty/almighty-test-runner $GOPATH/src/github.com/almighty/almighty-test-runner
+----
+
+NOTE: Have a look how link:https://github.com/moovweb/gvm[Go Version Manager] can help you simplifying configuration and management of different versions of Go.
+
+Then run the build by simply executing `make` from the root directory. This will perform following actions:
+
+. Clean artifacts from the previous build
+. Fetch or update dependencies using `glide`
+. Compile and build binaries
+. Run tests using `ginkgo -r` command
+
+When in doubt just `make help`.
+
+
+=== Continuous Testing [[testing]]
+
+In order to continuously run the tests whenever code change occur execute following command from the root directory of the project:
+
+[source,bash]
+----
+$ ginkgo watch -r
+----
+
+and keep it running in the terminal.
