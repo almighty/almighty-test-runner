@@ -4,7 +4,7 @@ This repository consists of testing services provided by ALMighty.
 
 == ALMighty Test Runner
 
-Key features
+=== Key features
 
 * Running project build in different configurations
 
@@ -12,6 +12,10 @@ Project itself depends on following tools, which are incorporated into the build
 
 * link:https://glide.sh/[glide] for dependency management
 * link:https://github.com/onsi/ginkgo[ginkgo] for testing
+
+=== How to use it?
+
+Stay tuned! Work in progress :) For the moment this repository consists of basic functionalities and infrastructure to write and test the code.
 
 === Start hacking [[hacking]]
 
