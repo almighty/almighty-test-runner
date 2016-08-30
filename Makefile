@@ -8,6 +8,7 @@ SOURCES := $(shell find $(SOURCEDIR) -name '*.go')
 
 # Tools
 GLIDE_BIN := $(shell command -v glide 2> /dev/null)
+GOMETALINTER_BIN := $(shell command -v gometalinter 2> /dev/null)
 
 # Build configuration
 BUILD_TIME=`date -u '+%Y-%m-%d_%I:%M:%S%p'`
@@ -36,6 +37,10 @@ test: ## Runs ginkgo tests
 .PHONY: deps 
 deps: ## Fetches all dependencies using Glide
 	$(GLIDE_BIN) --verbose install
+
+.PHONY: check
+check: ## Concurrently runs a whole bunch of static analysis tools
+	$(GOMETALINTER_BIN) --vendor --deadline 10s ./...
 
 .PHONY: all 
 all: clean deps $(BINARY) test ## (default) Performs clean deps build test

@@ -54,3 +54,19 @@ $ ginkgo watch -r
 ----
 
 and keep it running in the terminal.
+
+=== Code analysis [[code-analysis]]
+
+To perform static analysis of the code base we use link:https://github.com/alecthomas/gometalinter[`gometalinter`] tool. To install it run following commands:
+
+[source,bash]
+----
+$ go get -u github.com/alecthomas/gometalinter && gometalinter --install
+----
+
+In order to execute the check simply invoke `make check` which effectively does
+
+[source,bash]
+----
+$ gometalinter --vendor --deadline 10s ./...
+----
