@@ -32,7 +32,7 @@ clean: ## Removes binary
 
 .PHONY: test
 test: ## Runs ginkgo tests
-	ginkgo -r
+	ginkgo -r -p
 
 .PHONY: deps 
 deps: ## Fetches all dependencies using Glide
