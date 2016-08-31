@@ -18,7 +18,7 @@ var _ = Describe("Maven build tool", func() {
             path := "/tmp/build_folder"
 
             mavenDetector := Create(path, TestRunnerConfiguration{})
-            defer createTmpDir(path).with("pom.xml").andDefer()(purge(path))
+            defer createTmpDir(path).with("pom.xml").andDefer(purge(path))()
 
             Expect(mavenDetector.InUse()).To(BeTrue())
         })
@@ -26,7 +26,7 @@ var _ = Describe("Maven build tool", func() {
         It("should not support maven when pom.xml not found in the root directory", func() {
             path := "/tmp/build_folder"
             mavenDetector := Create(path, TestRunnerConfiguration{})
-            defer createTmpDir(path).with("build.xml").andDefer()(purge(path))
+            defer createTmpDir(path).with("build.xml").andDefer(purge(path))()
 
             Expect(mavenDetector.InUse()).To(BeFalse())
         })
@@ -72,7 +72,7 @@ func createTmpDir(path string) file {
 }
 
 type fileCreator interface {
-    andDefer() func(fn func())
+    andDefer(fn func()) func()
     with(fileName string) fileCreator
 }
 
@@ -90,8 +90,8 @@ func (f file) with(fileName string) fileCreator {
     return f
 }
 
-func (f file) andDefer() func(func()) {
-    return func(f func()) {
-        f()
+func (f file) andDefer(fn func()) func() {
+    return func() {
+        fn()
     }
 }
