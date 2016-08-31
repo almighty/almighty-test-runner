@@ -30,6 +30,10 @@ clean: ## Removes binary
 test: ## Runs ginkgo tests
 	ginkgo -r -p
 
+.PHONY: watch
+watch: ## Continuously run tests whenever source code changes
+	ginkgo watch -r -p
+
 .PHONY: deps 
 deps: ## Fetches all dependencies using Glide
 	glide --verbose install
