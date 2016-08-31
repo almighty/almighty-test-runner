@@ -58,13 +58,15 @@ var _ = Describe("Maven build tool", func() {
 
 func purge(path string) func() {
     return (func() {
-        os.RemoveAll(path)
+        if err := os.RemoveAll(path); err != nil {
+            Fail(fmt.Sprintf("Unable to remove directory directory %s. Reason %s", path, err))
+        }
     })
 }
 
 func createTmpDir(path string) file {
     if err := os.MkdirAll(path, 0755); err != nil {
-        fmt.Errorf("Unable to create directory %s. Reason %s", path, err)
+        Fail(fmt.Sprintf("Unable to create directory %s. Reason %s", path, err))
     }
     return file{path: path}
 }
@@ -80,7 +82,11 @@ type file struct {
 
 func (f file) with(fileName string) fileCreator {
     file, _ := os.Create(path.Join(f.path, fileName))
-    defer file.Close()
+    defer func() {
+        if err := file.Close(); err != nil {
+            Fail(fmt.Sprintf("Unable to close the file %s. Reason %s", file.Name(), err))
+        }
+    }()
     return f
 }
 

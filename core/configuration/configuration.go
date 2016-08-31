@@ -49,11 +49,9 @@ func Product(v EnvironmentVerticals) ([][]string, error) {
 }
 
 func Read(configuration string) (TestRunnerConfiguration, error) {
-    var c TestRunnerConfiguration = TestRunnerConfiguration{}
-    if err := yaml.Unmarshal([]byte(configuration), &c); err != nil {
-        return c, err
-    }
-    return c, nil
+    c := TestRunnerConfiguration{}
+    err := yaml.Unmarshal([]byte(configuration), &c)
+    return c, err
 }
 
 func verticalEntryOf(key string, s []string) []interface{} {
