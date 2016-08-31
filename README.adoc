@@ -1,4 +1,5 @@
 = ALMighty Test Services
+:test: gometaliner
 
 This repository consists of testing services provided by ALMighty.
 
@@ -39,7 +40,7 @@ Then run the build by simply executing `make` from the root directory. This will
 . Clean artifacts from the previous build
 . Fetch or update dependencies using `glide`
 . Compile and build binaries
-. Run tests using `ginkgo -r` command
+. Run tests
 
 When in doubt just `make help`.
 
@@ -64,9 +65,9 @@ To perform static analysis of the code base we use link:https://github.com/alect
 $ go get -u github.com/alecthomas/gometalinter && gometalinter --install
 ----
 
-In order to execute the check simply invoke `make check` which effectively does
+In order to execute the check simply invoke `make check` which effectively does:
 
 [source,bash]
 ----
-$ gometalinter --vendor --deadline 10s ./...
+gometalinter --vendor --deadline 10s ./...
 ----
