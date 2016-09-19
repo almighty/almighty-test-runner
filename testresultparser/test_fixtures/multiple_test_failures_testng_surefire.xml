@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="4" failures="2" name="testNgMavenExample1.TestNgMavenExampleTest" time="0.028" errors="0" skipped="1">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+  </properties>
+  <testcase classname="testNgMavenExample1.TestNgMavenExampleTest" name="bar" time="0.021">
+    <failure message="expected [foo] but found [2.0]" type="java.lang.AssertionError">java.lang.AssertionError: expected [foo] but found [2.0]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:494)
+	at org.testng.Assert.assertEquals(Assert.java:123)
+	at org.testng.Assert.assertEquals(Assert.java:165)
+	at testNgMavenExample1.TestNgMavenExampleTest.bar(TestNgMavenExampleTest.java:21)
+</failure>
+    <system-out>Configuring TestNG with: org.apache.maven.surefire.testng.conf.TestNG652Configurator@3d82c5f3
+    </system-out>
+  </testcase>
+  <testcase classname="testNgMavenExample1.TestNgMavenExampleTest" name="exampleOfTestNgMaven" time="0"/>
+  <testcase classname="testNgMavenExample1.TestNgMavenExampleTest" name="foo" time="0.005">
+    <failure message="expected [foo] but found [1.0]" type="java.lang.AssertionError">java.lang.AssertionError: expected [foo] but found [1.0]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:494)
+	at org.testng.Assert.assertEquals(Assert.java:123)
+	at org.testng.Assert.assertEquals(Assert.java:165)
+	at testNgMavenExample1.TestNgMavenExampleTest.foo(TestNgMavenExampleTest.java:16)
+</failure>
+  </testcase>
+  <testcase classname="testNgMavenExample1.TestNgMavenExampleTest" name="testCaseSkipException" time="0.002">
+    <skipped/>
+    <system-out>Im in skip exception
+    </system-out>
+  </testcase>
+</testsuite>

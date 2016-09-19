@@ -9,5 +9,5 @@ import (
 
 func TestDetectors(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Buildtool Detectors Suite")
+	RunSpecs(t, "Build Tool Detectors Suite")
 }

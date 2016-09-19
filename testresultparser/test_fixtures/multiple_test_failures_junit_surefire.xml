@@ -1,0 +1,90 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.055" tests="22" errors="1" skipped="7" failures="2">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="/usr/java/jdk1.8.0_77/jre/lib/amd64"/>
+  </properties>
+  <testcase name="shouldNotChangeServerUriInCaseODockerInsideDockerIfItIsDisabled" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.011"/>
+  <testcase name="dockerUriConfigurationParameterShouldTakePrecedenceOverSystemEnv" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="shouldChangeServerUriInCaseOfRunningDockerInsideDocker" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.004"/>
+  <testcase name="tlsVerifyShouldBeTrueInCaseOfNotSetAndDockerHostTagPresent" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="tlsVerifyShouldBeFalseInCaseOfHttpServerUri" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.003"/>
+  <testcase name="shouldStartDockerMachineIfItIsStoppedAndMachineNameIsSet" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.006"/>
+  <testcase name="shouldUseDefaultsInCaseOfNotHavingDockerMachineInstalledAndNoDockerUriNorMachineName" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="tlsVerifyShouldBeTrueInCaseOfNotSetAndDockerHostTagNotPresent" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="tlsVerifyShouldBeTrueInCaseOfHttpsServerUri" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.003"/>
+  <testcase name="tlsVerifyShouldBeFalseInCaseOfSetToFalseAndDockerHostTagPresent" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.002"/>
+  <testcase name="shouldDumpCubeConfiguration" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.003"/>
+  <testcase name="shouldUseDockerMachineIfDockerHostIsNotSetAndOnlyOneMachineIsRunning" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.007">
+    <failure message="&#10;Expected: map containing [&quot;serverUri&quot;-&gt;&quot;tcp://192.168.99.100:2376&quot;]&#10;     but: map was [&lt;serverUri=tcp://localhost:4243&gt;, &lt;dockerServerIp=localhost&gt;, &lt;tlsVerify=false&gt;]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError:
+Expected: map containing ["serverUri"->"tcp://192.168.99.100:2376"]
+     but: map was [<serverUri=tcp://localhost:4243>, <dockerServerIp=localhost>, <tlsVerify=false>]
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.junit.Assert.assertThat(Assert.java:865)
+	at org.junit.Assert.assertThat(Assert.java:832)
+	at org.arquillian.cube.docker.impl.client.CubeConfiguratorTest.shouldUseDockerMachineIfDockerHostIsNotSetAndOnlyOneMachineIsRunning(CubeConfiguratorTest.java:172)
+]]></failure>
+    <system-out><![CDATA[CubeDockerConfiguration:
+  serverUri = tcp://localhost:4243
+  tlsVerify = false
+  dockerServerIp = localhost
+  definitionFormat = COMPOSE
+  clean = false
+  removeVolumes = true
+  dockerContainers = containers: {}
+networks: {}
+
+
+]]></system-out>
+  </testcase>
+  <testcase name="tlsVerifyShouldBeFalseInCaseOfSetToTrueAndHttpServerUri" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.002"/>
+  <testcase name="shouldSetServerIpWithLocalhostInCaseOfNativeLinuxInstallation" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.003">
+    <error type="java.lang.NullPointerException:">java.lang.NullPointerException: null
+      at org.arquillian.cube.docker.impl.client.CubeConfiguratorTest.shouldSetServerIpWithLocalhostInCaseOfNativeLinuxInstallation(CubeConfiguratorTest.java:226)
+    </error>
+  </testcase>
+  <testcase name="tlsVerifyShouldBeTrueInCaseOfSetToFalseAndHttpsServerUri" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.002"/>
+  <testcase name="tlsVerifyShouldBeTrueInCaseOfDockerMachine" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.003"/>
+  <testcase name="tlsVerifyShouldBeTrueInCaseOfCertPathPresent" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="shouldUseBoot2DockerIfDockerHostIsSetOnServerURIByDefault" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="shouldNotUseDockerMachineIfDockerHostIsNotSetNotDockerMachineAndTwoMachineIsRunning" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0">
+    <skipped/>
+  </testcase>
+  <testcase name="tlsVerifyShouldBeTrueInCaseOfSetToFalseAndDockerHostTagNotPresent" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.002"/>
+  <testcase name="shouldUseDockerMachineIfDockerHostIsSetOnServerURIAndMachineNameIsSet" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.002"/>
+  <testcase name="shouldUseHostEnvIfDockerHostIsSetOnServerURIAndSystemEnvironmentVarIsSet" classname="org.arquillian.cube.docker.impl.client.CubeConfiguratorTest" time="0.002">
+    <failure message="&#10;Expected: map containing [&quot;serverUri&quot;-&gt;&quot;tcp://127.0.0.1:22222&quot;]&#10;     but: map was [&lt;serverUri=tcp://localhost:4243&gt;, &lt;dockerServerIp=localhost&gt;, &lt;tlsVerify=false&gt;]" type="java.lang.AssertionError"><![CDATA[java.lang.AssertionError:
+Expected: map containing ["serverUri"->"tcp://127.0.0.1:22222"]
+     but: map was [<serverUri=tcp://localhost:4243>, <dockerServerIp=localhost>, <tlsVerify=false>]
+	at org.hamcrest.MatcherAssert.assertThat(MatcherAssert.java:20)
+	at org.junit.Assert.assertThat(Assert.java:865)
+	at org.junit.Assert.assertThat(Assert.java:832)
+	at org.arquillian.cube.docker.impl.client.CubeConfiguratorTest.shouldUseHostEnvIfDockerHostIsSetOnServerURIAndSystemEnvironmentVarIsSet(CubeConfiguratorTest.java:260)
+]]></failure>
+    <system-out><![CDATA[CubeDockerConfiguration:
+  serverUri = tcp://localhost:4243
+  tlsVerify = false
+  dockerServerIp = localhost
+  definitionFormat = COMPOSE
+  clean = false
+  removeVolumes = true
+  dockerContainers = containers: {}
+networks: {}
+
+
+]]></system-out>
+  </testcase>
+</testsuite>
