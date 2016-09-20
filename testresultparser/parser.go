@@ -2,7 +2,6 @@ package testresultparser
 
 import (
 	"encoding/xml"
-	"fmt"
 	"io/ioutil"
 	"os"
 	"regexp"
@@ -44,14 +43,14 @@ type failsafeReportXML struct {
 	FailureMessage string `xml:"failureMessage"`
 }
 
-// Failure struct is the part of the Result struct for the output of the Parser Library
+// Failure struct is the part of the Result struct for the output of the Parser
 type Failure struct {
 	TestCase string
 	Type     string
 	Message  string
 }
 
-// Result is the output of the Parser Library
+// Result is the output strcut of the Parser
 type Result struct {
 	TestSuite string
 	Tests     int
@@ -62,46 +61,50 @@ type Result struct {
 	Failure   []Failure
 }
 
-// Parser struct is the input for the Parser Library
-type Parser struct {
-	filepath string
-	plugin   string
+// convertResultFromFailsafe is a helper function
+// to convert struct to desired output struct
+func convertResultFromFailsafe(f failsafeReportXML) Result {
+	var result Result
+	var failure Failure
+
+	result.TestSuite = f.Result
+	result.Tests = f.Tests
+	result.Failures = f.Failures
+	result.Errors = f.Errors
+	result.Skipped = f.Skipped
+	result.Time = f.TimeOut
+	failure.TestCase = ""
+	failure.Type = ""
+	failure.Message = f.FailureMessage
+	result.Failure = append(result.Failure, failure)
+	return result
 }
 
-func parsefailsafeXML(filename string) (failsafeReportXML, error) {
-	v := failsafeReportXML{}
-	xmlFile, err := os.Open(filename)
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return v, err
+// convertResultFromXML is a helper function
+// to convert struct to desired output struct
+func convertResultFromXML(t TestResultXML) Result {
+	var result Result
+	var failure Failure
+
+	result.TestSuite = t.TestSuite
+	result.Tests = t.Tests
+	result.Failures = t.Failures
+	result.Errors = t.Errors
+	result.Skipped = t.Skipped
+	result.Time = t.Time
+	for _, test := range t.T {
+		failure.TestCase = test.Name
+		failure.Type = test.F.FailureType
+		failure.Message = test.F.Message
 	}
-	defer xmlFile.Close()
-	b, _ := ioutil.ReadAll(xmlFile)
-	xml.Unmarshal(b, &v)
-	return v, nil
+	result.Failure = append(result.Failure, failure)
+	return result
 }
 
-func parseXML(filename string) (TestResultXML, error) {
-	v := TestResultXML{}
-	xmlFile, err := os.Open(filename)
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return v, err
-	}
-	defer xmlFile.Close()
-	b, _ := ioutil.ReadAll(xmlFile)
-	xml.Unmarshal(b, &v)
-	return v, nil
-}
-
-func parseTxt(filename string) (Result, error) {
+// Parse method for Text Report parsing
+func (r *Result) Parse(f []byte) *Result {
 	result := Result{}
 	failure := Failure{}
-	f, err := ioutil.ReadFile(filename)
-	if err != nil {
-		fmt.Println("Error opening file:", err)
-		return result, err
-	}
 
 	testsuite := regexp.MustCompile("Test set: ([a-zA-Z0-9_.]+)")
 	result.TestSuite = testsuite.FindStringSubmatch(string(f))[1]
@@ -126,66 +129,49 @@ func parseTxt(filename string) (Result, error) {
 			result.Failure = append(result.Failure, failure)
 		}
 	}
-	return result, nil
-}
-
-func convertResultFromFailsafe(f failsafeReportXML) Result {
-	var result Result
-	var failure Failure
-
-	result.TestSuite = f.Result
-	result.Tests = f.Tests
-	result.Failures = f.Failures
-	result.Errors = f.Errors
-	result.Skipped = f.Skipped
-	result.Time = f.TimeOut
-	failure.TestCase = ""
-	failure.Type = ""
-	failure.Message = f.FailureMessage
-	result.Failure = append(result.Failure, failure)
-
-	return result
-}
-
-func convertResultFromXML(t TestResultXML) Result {
-	var result Result
-	var failure Failure
-
-	result.TestSuite = t.TestSuite
-	result.Tests = t.Tests
-	result.Failures = t.Failures
-	result.Errors = t.Errors
-	result.Skipped = t.Skipped
-	result.Time = t.Time
-	for _, test := range t.T {
-		failure.TestCase = test.Name
-		failure.Type = test.F.FailureType
-		failure.Message = test.F.Message
-	}
-	result.Failure = append(result.Failure, failure)
-	return result
-}
-
-// Parse function defines the parsing function used for the specified format
-func (p Parser) Parse() *Result {
-	var result Result
-	if strings.Contains(p.filepath, ".xml") {
-		if p.plugin == "failsafe" {
-			r, _ := parsefailsafeXML(p.filepath)
-			result = convertResultFromFailsafe(r)
-		} else {
-			r, _ := parseXML(p.filepath)
-			result = convertResultFromXML(r)
-		}
-	}
-	if strings.Contains(p.filepath, ".txt") {
-		result, _ = parseTxt(p.filepath)
-	}
 	return &result
 }
 
-// New function acts like a constructor
-func New(filepath, plugin string) *Parser {
-	p := Parser{filepath: filepath, plugin: plugin}
-	return &p
+// Parse method for XML Report parsing
+func (tr *TestResultXML) Parse(b []byte) *Result {
+	xml.Unmarshal(b, tr)
+	result := convertResultFromXML(*tr)
+	return &result
+}
+
+// Parse method for Failsafe XML Report parsing
+func (fr *failsafeReportXML) Parse(b []byte) *Result {
+	xml.Unmarshal(b, fr)
+	result := convertResultFromFailsafe(*fr)
+	return &result
+}
+
+// Parser interface to buildtools parse methods
+type Parser interface {
+	Parse([]byte) *Result
+}
+
+// ReportParser returns byte object to the interface parse method
+func ReportParser(p Parser, filepath string) *Result {
+	fp, _ := os.Open(filepath)
+	defer fp.Close()
+	b, _ := ioutil.ReadAll(fp)
+	r := p.Parse(b)
+	return r
+}
+
+// Parse function is called by the external interface and
+// returns the output struct
+func Parse(filepath, plugin string) (*Result, error) {
+	var obj Parser
+	if strings.Contains(filepath, ".xml") {
+		if plugin == "failsafe" {
+			obj = &failsafeReportXML{}
+		} else {
+			obj = &TestResultXML{}
+		}
+	} else if strings.Contains(filepath, ".txt") {
+		obj = &Result{}
+	}
+	return ReportParser(obj, filepath), nil
 }
