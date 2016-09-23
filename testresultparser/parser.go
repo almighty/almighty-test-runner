@@ -64,40 +64,43 @@ type Result struct {
 // convertResultFromFailsafe is a helper function
 // to convert struct to desired output struct
 func convertResultFromFailsafe(f failsafeReportXML) Result {
-	var result Result
-	var failure Failure
+	result := Result{
+		TestSuite: f.Result,
+		Tests:     f.Tests,
+		Failures:  f.Failures,
+		Errors:    f.Errors,
+		Skipped:   f.Skipped,
+		Time:      f.TimeOut,
+	}
+	result.Failure = append(result.Failure,
+		Failure{TestCase: "",
+			Type:    "",
+			Message: f.FailureMessage,
+		})
 
-	result.TestSuite = f.Result
-	result.Tests = f.Tests
-	result.Failures = f.Failures
-	result.Errors = f.Errors
-	result.Skipped = f.Skipped
-	result.Time = f.TimeOut
-	failure.TestCase = ""
-	failure.Type = ""
-	failure.Message = f.FailureMessage
-	result.Failure = append(result.Failure, failure)
 	return result
 }
 
 // convertResultFromXML is a helper function
 // to convert struct to desired output struct
 func convertResultFromXML(t TestResultXML) Result {
-	var result Result
-	var failure Failure
+	result := Result{
+		TestSuite: t.TestSuite,
+		Tests:     t.Tests,
+		Failures:  t.Failures,
+		Errors:    t.Errors,
+		Skipped:   t.Skipped,
+		Time:      t.Time}
 
-	result.TestSuite = t.TestSuite
-	result.Tests = t.Tests
-	result.Failures = t.Failures
-	result.Errors = t.Errors
-	result.Skipped = t.Skipped
-	result.Time = t.Time
 	for _, test := range t.T {
-		failure.TestCase = test.Name
-		failure.Type = test.F.FailureType
-		failure.Message = test.F.Message
+		if test.F.FailureType != "" {
+			result.Failure = append(result.Failure,
+				Failure{TestCase: test.Name,
+					Type:    test.F.FailureType,
+					Message: test.F.Message,
+				})
+		}
 	}
-	result.Failure = append(result.Failure, failure)
 	return result
 }
 
