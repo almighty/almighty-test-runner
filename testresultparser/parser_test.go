@@ -35,7 +35,11 @@ var _ = Describe("Parser", func() {
 					Type:     "java.lang.AssertionError",
 					Message:  "java.lang.AssertionError: expected [foo] but found [2.0]\n\tat org.testng.Assert.fail(Assert.java:94)\n\tat org.testng.Assert.failNotEquals(Assert.java:494)\n\tat org.testng.Assert.assertEquals(Assert.java:123)\n\tat org.testng.Assert.assertEquals(Assert.java:165)\n\tat testNgMavenExample1.TestNgMavenExampleTest.bar(TestNgMavenExampleTest.java:21)\n",
 				},
-					{TestCase: "foo", Type: "java.lang.AssertionError", Message: "java.lang.AssertionError: expected [foo] but found [1.0]\n\tat org.testng.Assert.fail(Assert.java:94)\n\tat org.testng.Assert.failNotEquals(Assert.java:494)\n\tat org.testng.Assert.assertEquals(Assert.java:123)\n\tat org.testng.Assert.assertEquals(Assert.java:165)\n\tat testNgMavenExample1.TestNgMavenExampleTest.foo(TestNgMavenExampleTest.java:16)\n"}}
+					{TestCase: "foo",
+						Type:    "java.lang.AssertionError",
+						Message: "java.lang.AssertionError: expected [foo] but found [1.0]\n\tat org.testng.Assert.fail(Assert.java:94)\n\tat org.testng.Assert.failNotEquals(Assert.java:494)\n\tat org.testng.Assert.assertEquals(Assert.java:123)\n\tat org.testng.Assert.assertEquals(Assert.java:165)\n\tat testNgMavenExample1.TestNgMavenExampleTest.foo(TestNgMavenExampleTest.java:16)\n",
+					},
+				}
 				expectedResult := &Result{TestSuite: "testNgMavenExample1.TestNgMavenExampleTest", Tests: 4, Failures: 2, Errors: 0, Skipped: 1, Time: "0.028", Failure: f}
 				Expect(Parse(getFilepath("testNG_failure_test2.xml"), "surefire")).To(Equal(expectedResult))
 			})
@@ -59,9 +63,26 @@ var _ = Describe("Parser", func() {
 	Describe("Parsing TXT file", func() {
 		Context("With Maven-surefire plugin and TestNG", func() {
 			It("should return output struct", func() {
-				f := []Failure{{TestCase: "foo(testNgMavenExample1.TestNgMavenExampleTest)", Type: "java.lang.AssertionError", Message: ": expected [foo] but found [1.0]"}}
+				f := []Failure{{TestCase: "foo", Type: "java.lang.AssertionError", Message: "expected [foo] but found [1.0]"}}
 				expectedResult := &Result{TestSuite: "testNgMavenExample1.TestNgMavenExampleTest", Tests: 2, Failures: 1, Errors: 0, Skipped: 0, Time: "0.785", Failure: f}
 				Expect(Parse(getFilepath("testNG_failure_test.txt"), "surefire")).To(Equal(expectedResult))
+			})
+		})
+		Context("With Maven-surefire plugin and TestNG and multiple failures", func() {
+			It("should return output struct", func() {
+				f := []Failure{{
+					TestCase: "bar",
+					Type:     "java.lang.AssertionError",
+					Message:  "expected [foo] but found [2.0]",
+				},
+					{
+						TestCase: "foo",
+						Type:     "java.lang.AssertionError",
+						Message:  "expected [foo] but found [1.0]",
+					},
+				}
+				expectedResult := &Result{TestSuite: "testNgMavenExample1.TestNgMavenExampleTest", Tests: 4, Failures: 2, Errors: 0, Skipped: 1, Time: "1.395", Failure: f}
+				Expect(Parse(getFilepath("testNG_failure_test2.txt"), "surefire")).To(Equal(expectedResult))
 			})
 		})
 	})

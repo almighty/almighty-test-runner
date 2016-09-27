@@ -77,7 +77,6 @@ func convertResultFromFailsafe(f failsafeReportXML) Result {
 			Type:    "",
 			Message: f.FailureMessage,
 		})
-
 	return result
 }
 
@@ -107,29 +106,30 @@ func convertResultFromXML(t TestResultXML) Result {
 // Parse method for Text Report parsing
 func (r *Result) Parse(f []byte) *Result {
 	result := Result{}
-	failure := Failure{}
 
 	testsuite := regexp.MustCompile("Test set: ([a-zA-Z0-9_.]+)")
-	result.TestSuite = testsuite.FindStringSubmatch(string(f))[1]
 	tests := regexp.MustCompile("Tests run: ([a-zA-Z0-9_.]+)")
-	result.Tests, _ = strconv.Atoi(tests.FindStringSubmatch(string(f))[1])
 	failures := regexp.MustCompile("Failures: ([a-zA-Z0-9_.]+)")
-	result.Failures, _ = strconv.Atoi(failures.FindStringSubmatch(string(f))[1])
 	errors := regexp.MustCompile("Errors: ([a-zA-Z0-9_.]+)")
-	result.Errors, _ = strconv.Atoi(errors.FindStringSubmatch(string(f))[1])
 	skipped := regexp.MustCompile("Skipped: ([a-zA-Z0-9_.]+)")
-	result.Skipped, _ = strconv.Atoi(skipped.FindStringSubmatch(string(f))[1])
 	time := regexp.MustCompile("Time elapsed: ([a-zA-Z0-9_.]+)")
+
+	result.TestSuite = testsuite.FindStringSubmatch(string(f))[1]
+	result.Tests, _ = strconv.Atoi(tests.FindStringSubmatch(string(f))[1])
+	result.Failures, _ = strconv.Atoi(failures.FindStringSubmatch(string(f))[1])
+	result.Errors, _ = strconv.Atoi(errors.FindStringSubmatch(string(f))[1])
+	result.Skipped, _ = strconv.Atoi(skipped.FindStringSubmatch(string(f))[1])
 	result.Time = time.FindStringSubmatch(string(f))[1]
 
 	if result.Failures != 0 {
+		failedTestCase := regexp.MustCompile(`(.*)\(.*\).*FAILURE`)
+		failureType := regexp.MustCompile(`(.*Error): (.*)`)
 		for i := 0; i < result.Failures; i++ {
-			failedTestCase := regexp.MustCompile(`.*\(.*\)`)
-			failure.TestCase = failedTestCase.FindString(string(f))
-			failureType := regexp.MustCompile(`(.*Error)(:.*)`)
-			failure.Type = failureType.FindStringSubmatch(string(f))[1]
-			failure.Message = failureType.FindStringSubmatch(string(f))[2]
-			result.Failure = append(result.Failure, failure)
+			result.Failure = append(result.Failure,
+				Failure{TestCase: failedTestCase.FindAllStringSubmatch(string(f), -1)[i][1],
+					Type:    failureType.FindAllStringSubmatch(string(f), -1)[i][1],
+					Message: failureType.FindAllStringSubmatch(string(f), -1)[i][2],
+				})
 		}
 	}
 	return &result
