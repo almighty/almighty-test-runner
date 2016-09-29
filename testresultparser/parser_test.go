@@ -5,7 +5,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	. "github.com/almighty-test-runner/testresultparser"
+	. "github.com/almighty/almighty-test-runner/testresultparser"
 
 	. "github.com/onsi/ginkgo"
 	. "github.com/onsi/gomega"
