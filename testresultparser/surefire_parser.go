@@ -32,7 +32,7 @@ type surefireParser struct {
 // convertTestResultFromXML is a helper function to convert
 // struct to desired output struct
 func (surefireParser) convertTestResultFromXML(t surefireReportXML) TestResult {
-	TestResult := TestResult{
+	testResult := TestResult{
 		TestSuite: t.TestSuite,
 		Tests:     t.Tests,
 		Failures:  t.Failures,
@@ -42,14 +42,14 @@ func (surefireParser) convertTestResultFromXML(t surefireReportXML) TestResult {
 
 	for _, test := range t.T {
 		if test.F.FailureType != "" {
-			TestResult.Failure = append(TestResult.Failure,
+			testResult.Failure = append(testResult.Failure,
 				TestFailure{TestCase: test.Name,
 					Type:    test.F.FailureType,
 					Message: test.F.Message,
 				})
 		}
 	}
-	return TestResult
+	return testResult
 }
 
 // Parse method does the actual Surefire XML Report parsing
@@ -58,6 +58,6 @@ func (s surefireParser) Parse(filepath string) *TestResult {
 	b := readFile(filepath)
 	err := xml.Unmarshal(b, &t)
 	checkErr(err)
-	TestResult := s.convertTestResultFromXML(t)
-	return &TestResult
+	testResult := s.convertTestResultFromXML(t)
+	return &testResult
 }

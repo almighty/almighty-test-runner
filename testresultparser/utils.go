@@ -15,13 +15,13 @@ func checkErr(e error) {
 
 // ReportParser returns byte object to the interface parse method
 func readFile(filepath string) []byte {
-	fp, err := os.Open(filepath)
-	checkErr(err)
+	fp, errOpenFile := os.Open(filepath)
+	checkErr(errOpenFile)
 	defer func() {
-		err := fp.Close()
-		checkErr(err)
+		errCloseFile := fp.Close()
+		checkErr(errCloseFile)
 	}()
-	b, err := ioutil.ReadAll(fp)
-	checkErr(err)
+	b, errReadFile := ioutil.ReadAll(fp)
+	checkErr(errReadFile)
 	return b
 }

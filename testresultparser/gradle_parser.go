@@ -35,8 +35,8 @@ type gradleParser struct {
 
 // convertTestResultFromXML is a helper function to convert
 // struct to desired output struct
-func (gradleParser) convertTestResultFromXML(t gradleReportXML) TestResult {
-	TestResult := TestResult{
+func (gradleParser) convertTestResultFromGradleXML(t gradleReportXML) TestResult {
+	testResult := TestResult{
 		TestSuite: t.TestSuite,
 		Tests:     t.Tests,
 		Failures:  t.Failures,
@@ -46,14 +46,14 @@ func (gradleParser) convertTestResultFromXML(t gradleReportXML) TestResult {
 
 	for _, test := range t.T {
 		if test.F.FailureType != "" {
-			TestResult.Failure = append(TestResult.Failure,
+			testResult.Failure = append(testResult.Failure,
 				TestFailure{TestCase: test.Name,
 					Type:    test.F.FailureType,
 					Message: test.F.Message,
 				})
 		}
 	}
-	return TestResult
+	return testResult
 }
 
 // Parse method does the actual gradle XML Report parsing
@@ -65,6 +65,6 @@ func (s gradleParser) Parse(filepath string) *TestResult {
 		fmt.Println(err)
 		os.Exit(-1)
 	}
-	TestResult := s.convertTestResultFromXML(t)
-	return &TestResult
+	testResult := s.convertTestResultFromGradleXML(t)
+	return &testResult
 }

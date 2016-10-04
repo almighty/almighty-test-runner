@@ -19,7 +19,7 @@ type failsafeParser struct {
 // convertTestResultFromFailsafe is a helper function
 // to convert struct to desired output struct
 func (failsafeParser) convertTestResultFromFailsafe(f failsafeReportXML) TestResult {
-	TestResult := TestResult{
+	testResult := TestResult{
 		TestSuite: f.Result,
 		Tests:     f.Tests,
 		Failures:  f.Failures,
@@ -27,12 +27,12 @@ func (failsafeParser) convertTestResultFromFailsafe(f failsafeReportXML) TestRes
 		Skipped:   f.Skipped,
 		Time:      f.TimeOut,
 	}
-	TestResult.Failure = append(TestResult.Failure,
+	testResult.Failure = append(testResult.Failure,
 		TestFailure{TestCase: "",
 			Type:    "",
 			Message: f.FailureMessage,
 		})
-	return TestResult
+	return testResult
 }
 
 // Parse method does the actual Failsafe XML Report parsing
@@ -41,6 +41,6 @@ func (p failsafeParser) Parse(filepath string) *TestResult {
 	b := readFile(filepath)
 	err := xml.Unmarshal(b, &f)
 	checkErr(err)
-	TestResult := p.convertTestResultFromFailsafe(f)
-	return &TestResult
+	testResult := p.convertTestResultFromFailsafe(f)
+	return &testResult
 }
