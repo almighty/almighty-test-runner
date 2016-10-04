@@ -5,11 +5,14 @@ import (
 	"strconv"
 )
 
-// Parse method for Text Report parsing
-func (r *TestResult) Parse(filepath string) *TestResult {
-	f := readFile(filepath)
+type textParser struct {
+}
+
+// Parse method parses the Surefire Text Report
+func (textParser) Parse(filepath string) *TestResult {
 	TestResult := TestResult{}
 
+	f := readFile(filepath)
 	testsuite := regexp.MustCompile("Test set: ([a-zA-Z0-9_.]+)")
 	tests := regexp.MustCompile("Tests run: ([a-zA-Z0-9_.]+)")
 	failures := regexp.MustCompile("Failures: ([a-zA-Z0-9_.]+)")

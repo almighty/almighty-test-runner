@@ -12,7 +12,7 @@ type TestFailure struct {
 	Message  string
 }
 
-// TestResult is the output strcut of the Parser
+// TestResult is the output struct of the Parser
 type TestResult struct {
 	TestSuite string
 	Tests     int
@@ -34,14 +34,14 @@ func CreateParser(filepath, plugin string) (Parser, error) {
 	switch plugin {
 	case "surefire":
 		if strings.Contains(filepath, ".xml") {
-			return new(testResultXML), nil
+			return new(surefireParser), nil
 		} else if strings.Contains(filepath, ".txt") {
-			return new(TestResult), nil
+			return new(textParser), nil
 		}
 	case "failsafe":
-		return new(failsafeReportXML), nil
-	default:
-		return nil, errors.New("Invalid Parser Type.")
+		return new(failsafeParser), nil
+	case "gradle":
+		return new(gradleParser), nil
 	}
-	return nil, errors.New("No plugin specified.")
+	return nil, errors.New("Invalid Parser Type.")
 }

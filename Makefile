@@ -40,7 +40,7 @@ deps: ## Fetches all dependencies using Glide
 
 .PHONY: check
 check: ## Concurrently runs a whole bunch of static analysis tools
-	gometalinter --vendor --deadline 10s ./...
+	gometalinter --vendor --deadline 100s ./...
 
 .PHONY: all 
 all: clean deps $(BINARY) test ## (default) Performs clean deps build test
