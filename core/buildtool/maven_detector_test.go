@@ -4,10 +4,13 @@ import (
     "os"
     "fmt"
     "path"
+    "encoding/base64"
+    "crypto/rand"
     . "github.com/onsi/ginkgo"
     . "github.com/onsi/gomega"
     . "github.com/almighty/almighty-test-runner/core/configuration"
     . "github.com/almighty/almighty-test-runner/core/buildtool"
+    "strings"
 )
 
 var _ = Describe("Maven build tool", func() {
@@ -15,7 +18,7 @@ var _ = Describe("Maven build tool", func() {
     Context("Tool detection", func() {
 
         It("should support maven when pom.xml is found in the root directory of the project", func() {
-            path := "/tmp/build_folder"
+            path := "/tmp/build_folder_" + generateRndStr()
 
             mavenDetector := Create(path, TestRunnerConfiguration{})
             defer createTmpDir(path).with("pom.xml").andDefer(purge(path))()
@@ -24,7 +27,7 @@ var _ = Describe("Maven build tool", func() {
         })
 
         It("should not support maven when pom.xml not found in the root directory", func() {
-            path := "/tmp/build_folder"
+            path := "/tmp/build_folder_" + generateRndStr()
             mavenDetector := Create(path, TestRunnerConfiguration{})
             defer createTmpDir(path).with("build.xml").andDefer(purge(path))()
 
@@ -70,7 +73,6 @@ func createTmpDir(path string) file {
     }
     return file{path: path}
 }
-
 type fileCreator interface {
     andDefer(fn func()) func()
     with(fileName string) fileCreator
@@ -94,4 +96,13 @@ func (f file) andDefer(fn func()) func() {
     return func() {
         fn()
     }
+}
+
+func generateRndStr() string {
+    rb := make([]byte, 32)
+    if _, err := rand.Read(rb); err != nil {
+        Fail("Unable to generated random string as a suffix for the tmp path")
+    }
+    rs := base64.URLEncoding.EncodeToString(rb)
+    return strings.Trim(rs, "=")
 }
