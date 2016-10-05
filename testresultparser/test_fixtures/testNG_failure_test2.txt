@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+Test set: testNgMavenExample1.TestNgMavenExampleTest
+-------------------------------------------------------------------------------
+Tests run: 4, Failures: 2, Errors: 0, Skipped: 1, Time elapsed: 1.395 sec <<< FAILURE!
+bar(testNgMavenExample1.TestNgMavenExampleTest)  Time elapsed: 0.021 sec  <<< FAILURE!
+java.lang.AssertionError: expected [foo] but found [2.0]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:494)
+	at org.testng.Assert.assertEquals(Assert.java:123)
+	at org.testng.Assert.assertEquals(Assert.java:165)
+	at testNgMavenExample1.TestNgMavenExampleTest.bar(TestNgMavenExampleTest.java:21)
+
+foo(testNgMavenExample1.TestNgMavenExampleTest)  Time elapsed: 0.005 sec  <<< FAILURE!
+java.lang.AssertionError: expected [foo] but found [1.0]
+	at org.testng.Assert.fail(Assert.java:94)
+	at org.testng.Assert.failNotEquals(Assert.java:494)
+	at org.testng.Assert.assertEquals(Assert.java:123)
+	at org.testng.Assert.assertEquals(Assert.java:165)
+	at testNgMavenExample1.TestNgMavenExampleTest.foo(TestNgMavenExampleTest.java:16)
+
