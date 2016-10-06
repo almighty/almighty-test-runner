@@ -12,11 +12,12 @@ const (
 
 // TestResult contains details of single test execution
 type TestResult struct {
-	TestCase string
-	Kind     TestResultKind
+	TestCase,
+	Time string
+	Kind TestResultKind
 	Message,
 	Type,
-	Details  string
+	Details string
 }
 
 // ExecutionSummary keeps overall information about test suite execution
@@ -24,8 +25,8 @@ type ExecutionSummary struct {
 	Total,
 	Failures,
 	Errors,
-	Skipped 	int
-	Time     	string
+	Skipped int
+	Time string
 }
 
 // TestResults contains details of the whole test suite execution including subsequent
