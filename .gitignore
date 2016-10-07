@@ -70,6 +70,7 @@ _testmain.go
 vendor/
 
 # Ignore Go coverage files
+*.coverprofile
 **/coverage-unit.out
 **/coverage-integration.out
 /alm-test

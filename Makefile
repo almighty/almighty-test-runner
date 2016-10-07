@@ -28,7 +28,7 @@ clean: ## Removes binary
 
 .PHONY: test
 test: ## Runs ginkgo tests
-	ginkgo -r -p
+	ginkgo -r -p -cover
 
 .PHONY: watch
 watch: ## Continuously run tests whenever source code changes
