@@ -38,7 +38,7 @@ var _ = Describe("Parser", func() {
 			// given
 			filepath := getFilepath("single_test_failure_testng_surefire.xml")
 			expectedSummary := ExecutionSummary{
-				Total: 2, Failures: 1, Errors: 0, Skipped: 0, Time: "0.009",
+				Total: 2, Failures: 1, Errors: 0, Skipped: 0, Time: "0.009", SystemOut: "", SystemErr: "",
 			}
 			surefireParser := SurefireParser{}
 
@@ -117,7 +117,8 @@ var _ = Describe("Parser", func() {
 			expectedResult := &TestResults{
 				Name: "testNgMavenExample1.TestNgMavenExampleTest",
 				Summary: ExecutionSummary{
-					Total: 4, Failures: 2, Errors: 0, Skipped: 1, Time: "0.028",
+					Total: 4, Failures: 2, Errors: 0, Skipped: 1, Time: "0.028", SystemOut: "Configuring TestNG with: org.apache.maven.surefire.testng.conf.TestNG652Configurator@3d82c5f3\n    Im in skip exception\n    ",
+					SystemErr: "",
 				},
 				Results: results}
 
@@ -138,7 +139,7 @@ var _ = Describe("Parser", func() {
 			expectedResult := &TestResults{
 				Name: "254",
 				Summary: ExecutionSummary{
-					Total: 0, Failures: 1, Errors: 0, Skipped: 0,
+					Total: 0, Failures: 1, Errors: 0, Skipped: 0, SystemOut: "", SystemErr: "",
 				},
 				Results: nil}
 			failsafeSummaryParser := FailsafeParser{}
@@ -167,7 +168,7 @@ var _ = Describe("Parser", func() {
 			expectedResult := &TestResults{
 				Name: "com.udacity.gradle.test.PersonTest",
 				Summary: ExecutionSummary{
-					Total: 1, Failures: 1, Errors: 0, Skipped: 0, Time: "0.003",
+					Total: 1, Failures: 1, Errors: 0, Skipped: 0, Time: "0.003", SystemOut: "", SystemErr: "",
 				},
 				Results: f}
 			gradleParser := GradleParser{}

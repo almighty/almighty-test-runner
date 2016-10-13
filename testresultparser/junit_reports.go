@@ -10,13 +10,25 @@ type report struct {
 	Skipped     int        `xml:"skipped,attr"`
 	Time        string     `xml:"time,attr"`
 	TestResults []testCase `xml:"testcase"`
+	StdOut      systemOut  `xml:"system-out"`
+	StdErr      systemErr  `xml:"system-err"`
+}
+
+type systemOut struct {
+	SystemOut string `xml:",chardata"`
+}
+
+type systemErr struct {
+	SystemErr string `xml:",chardata"`
 }
 
 // surefireTestCase records information for each of the failing test case in XML Report
 type testCase struct {
-	Name   string `xml:"name,attr"`
-	Time   string `xml:"time,attr"`
-	Report []tag  `xml:",any"`
+	Name   string    `xml:"name,attr"`
+	Time   string    `xml:"time,attr"`
+	Report []tag     `xml:",any"`
+	StdOut systemOut `xml:"system-out"`
+	StdErr systemErr `xml:"system-err"`
 }
 
 type tag struct {
@@ -36,11 +48,13 @@ func convertTestResultFromJUnitFormat(t *report) TestResults {
 	results := TestResults{
 		Name: t.TestSuite,
 		Summary: ExecutionSummary{
-			Total:    t.Tests,
-			Failures: t.Failures,
-			Errors:   t.Errors,
-			Skipped:  t.Skipped,
-			Time:     t.Time,
+			Total:     t.Tests,
+			Failures:  t.Failures,
+			Errors:    t.Errors,
+			Skipped:   t.Skipped,
+			Time:      t.Time,
+			SystemOut: t.StdOut.SystemOut,
+			SystemErr: t.StdErr.SystemErr,
 		},
 	}
 
@@ -54,6 +68,8 @@ func convertTestResultFromJUnitFormat(t *report) TestResults {
 				Message:  detailsOf(test, getMsg),
 				Details:  detailsOf(test, getContent),
 			})
+		results.Summary.SystemOut += test.StdOut.SystemOut
+		results.Summary.SystemErr += test.StdErr.SystemErr
 	}
 	return results
 }

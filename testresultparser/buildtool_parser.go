@@ -26,7 +26,9 @@ type ExecutionSummary struct {
 	Failures,
 	Errors,
 	Skipped int
-	Time string
+	Time,
+	SystemOut,
+	SystemErr string
 }
 
 // TestResults contains details of the whole test suite execution including subsequent
