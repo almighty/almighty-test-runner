@@ -5,9 +5,12 @@ import (
 	. "github.com/onsi/gomega"
 
 	"testing"
+
+	"github.com/onsi/ginkgo/reporters"
 )
 
 func TestConfiguration(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Configuration Suite")
+	junitReporter := reporters.NewJUnitReporter("junit.xml")
+	RunSpecsWithDefaultAndCustomReporters(t, "Configuration Suite", []Reporter{junitReporter})
 }

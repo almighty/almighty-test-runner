@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-  <testsuite tests="6" failures="0" time="0.002872644">
-      <testcase name="Parser Parsing Maven Surefire XML report should have failures in the results" classname="Test Results parsing Suite" time="0.0006047940000000001"></testcase>
-      <testcase name="Parser Parsing Maven Surefire XML report should parse summary" classname="Test Results parsing Suite" time="0.00044832300000000004"></testcase>
-      <testcase name="Parser Parsing Maven Surefire XML report should convert to TestResult when multiple failures reported" classname="Test Results parsing Suite" time="0.0007538880000000001"></testcase>
-      <testcase name="Parser Parsing Maven Surefire XML report should convert entire report" classname="Test Results parsing Suite" time="0.00021491400000000002"></testcase>
-      <testcase name="Parser Parsing Maven Failsafe summary report Should convert summary report to TestResult" classname="Test Results parsing Suite" time="8.320200000000001e-05"></testcase>
-      <testcase name="Parser Parsing Gradle default test results Should convert single test error to TestResult" classname="Test Results parsing Suite" time="0.00027610000000000004"></testcase>
+  <testsuite tests="6" failures="0" time="0.001615806">
+      <testcase name="Parser Parsing Maven Surefire XML report should have failures in the results" classname="Test Results parsing Suite" time="0.000452099"></testcase>
+      <testcase name="Parser Parsing Maven Surefire XML report should parse summary" classname="Test Results parsing Suite" time="0.000290103"></testcase>
+      <testcase name="Parser Parsing Maven Surefire XML report should convert to TestResult when multiple failures reported" classname="Test Results parsing Suite" time="0.000401359"></testcase>
+      <testcase name="Parser Parsing Maven Surefire XML report should convert entire report" classname="Test Results parsing Suite" time="0.00013688"></testcase>
+      <testcase name="Parser Parsing Maven Failsafe summary report Should convert summary report to TestResult" classname="Test Results parsing Suite" time="5.7552e-05"></testcase>
+      <testcase name="Parser Parsing Gradle default test results Should convert single test error to TestResult" classname="Test Results parsing Suite" time="0.00019162400000000002"></testcase>
   </testsuite>

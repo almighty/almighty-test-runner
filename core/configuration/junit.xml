@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <testsuite tests="6" failures="0" time="0.001003619">
+      <testcase name="Test runner configuration Loading build settings Should load build command" classname="Configuration Suite" time="8.624500000000001e-05"></testcase>
+      <testcase name="Test runner configuration Loading build settings Should load description" classname="Configuration Suite" time="3.4139e-05"></testcase>
+      <testcase name="Test runner configuration Loading build settings Should load path" classname="Configuration Suite" time="1.9113e-05"></testcase>
+      <testcase name="Test runner configuration Enviroment verticals Should load verticals" classname="Configuration Suite" time="9.5326e-05"></testcase>
+      <testcase name="Test runner configuration Enviroment verticals Should provide cartesian product of all verticals" classname="Configuration Suite" time="0.00010227800000000001"></testcase>
+      <testcase name="Test runner configuration Enviroment verticals Should provide combination of other verticles with selected verticle" classname="Configuration Suite" time="0.000529712"></testcase>
+  </testsuite>
