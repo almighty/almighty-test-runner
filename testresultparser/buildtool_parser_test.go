@@ -80,6 +80,21 @@ var _ = Describe("Parser", func() {
 			Expect(actualResult.Results).To(ContainElement(error))
 		})
 
+		It("should parse standard output from failure log", func() {
+			// given
+			filepath := getFilepath("multiple_test_failures_junit_surefire.xml")
+			expectedSummary := ExecutionSummary{
+				Total: 22, Failures: 2, Errors: 1, Skipped: 7, Time: "0.055", SystemOut: "CubeDockerConfiguration:\n  serverUri = tcp://localhost:4243\n  tlsVerify = false\n  dockerServerIp = localhost\n  definitionFormat = COMPOSE\n  clean = false\n  removeVolumes = true\n  dockerContainers = containers: {}\nnetworks: {}\n\n\nCubeDockerConfiguration:\n  serverUri = tcp://localhost:4243\n  tlsVerify = false\n  dockerServerIp = localhost\n  definitionFormat = COMPOSE\n  clean = false\n  removeVolumes = true\n  dockerContainers = containers: {}\nnetworks: {}\n\n\n", SystemErr: "",
+			}
+			surefireParser := SurefireParser{}
+
+			// when
+			actualResult, _ := surefireParser.Parse(filepath)
+
+			// then
+			Expect(actualResult.Summary).To(Equal(expectedSummary))
+		})
+
 		It("should convert entire report", func() {
 			// given
 			filepath := getFilepath("multiple_test_failures_testng_surefire.xml")
