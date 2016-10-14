@@ -12,9 +12,9 @@ const (
 
 // TestResult contains details of single test execution
 type TestResult struct {
-	TestCase,
-	Time string
-	Kind TestResultKind
+	TestCase string
+	Time     float64
+	Kind     TestResultKind
 	Message,
 	Type,
 	Details string
@@ -26,7 +26,7 @@ type ExecutionSummary struct {
 	Failures,
 	Errors,
 	Skipped int
-	Time,
+	Time float64
 	SystemOut,
 	SystemErr string
 }

@@ -8,27 +8,19 @@ type report struct {
 	Failures    int        `xml:"failures,attr"`
 	Errors      int        `xml:"errors,attr"`
 	Skipped     int        `xml:"skipped,attr"`
-	Time        string     `xml:"time,attr"`
+	Time        float64    `xml:"time,attr"`
 	TestResults []testCase `xml:"testcase"`
-	StdOut      systemOut  `xml:"system-out"`
-	StdErr      systemErr  `xml:"system-err"`
-}
-
-type systemOut struct {
-	SystemOut string `xml:",chardata"`
-}
-
-type systemErr struct {
-	SystemErr string `xml:",chardata"`
+	StdOut      string     `xml:"system-out",chardata`
+	StdErr      string     `xml:"system-err",chardata`
 }
 
 // surefireTestCase records information for each of the failing test case in XML Report
 type testCase struct {
-	Name   string    `xml:"name,attr"`
-	Time   string    `xml:"time,attr"`
-	Report []tag     `xml:",any"`
-	StdOut systemOut `xml:"system-out"`
-	StdErr systemErr `xml:"system-err"`
+	Name   string  `xml:"name,attr"`
+	Time   float64 `xml:"time,attr"`
+	Report []tag   `xml:",any"`
+	StdOut string  `xml:"system-out",chardata`
+	StdErr string  `xml:"system-err",chardata`
 }
 
 type tag struct {
@@ -53,8 +45,8 @@ func convertTestResultFromJUnitFormat(t *report) TestResults {
 			Errors:    t.Errors,
 			Skipped:   t.Skipped,
 			Time:      t.Time,
-			SystemOut: t.StdOut.SystemOut,
-			SystemErr: t.StdErr.SystemErr,
+			SystemOut: t.StdOut,
+			SystemErr: t.StdErr,
 		},
 	}
 
@@ -68,8 +60,8 @@ func convertTestResultFromJUnitFormat(t *report) TestResults {
 				Message:  detailsOf(test, getMsg),
 				Details:  detailsOf(test, getContent),
 			})
-		results.Summary.SystemOut += test.StdOut.SystemOut
-		results.Summary.SystemErr += test.StdErr.SystemErr
+		results.Summary.SystemOut += test.StdOut
+		results.Summary.SystemErr += test.StdErr
 	}
 	return results
 }

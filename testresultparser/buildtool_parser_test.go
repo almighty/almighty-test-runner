@@ -19,7 +19,7 @@ var _ = Describe("Parser", func() {
 			filepath := getFilepath("single_test_failure_testng_surefire.xml")
 			expectedFailure := TestResult{
 				TestCase: "foo",
-				Time:     "0.003",
+				Time:     0.003,
 				Kind:     FAILURE,
 				Type:     "java.lang.AssertionError",
 				Message:  "expected [foo] but found [1.0]",
@@ -38,7 +38,7 @@ var _ = Describe("Parser", func() {
 			// given
 			filepath := getFilepath("single_test_failure_testng_surefire.xml")
 			expectedSummary := ExecutionSummary{
-				Total: 2, Failures: 1, Errors: 0, Skipped: 0, Time: "0.009", SystemOut: "", SystemErr: "",
+				Total: 2, Failures: 1, Errors: 0, Skipped: 0, Time: 0.009, SystemOut: "", SystemErr: "",
 			}
 			surefireParser := SurefireParser{}
 
@@ -54,7 +54,7 @@ var _ = Describe("Parser", func() {
 			filepath := getFilepath("multiple_test_failures_junit_surefire.xml")
 			failure := TestResult{
 				TestCase: "shouldUseHostEnvIfDockerHostIsSetOnServerURIAndSystemEnvironmentVarIsSet",
-				Time:     "0.002",
+				Time:     0.002,
 				Kind:     FAILURE,
 				Message:  "\nExpected: map containing [\"serverUri\"->\"tcp://127.0.0.1:22222\"]\n     but: map was [<serverUri=tcp://localhost:4243>, <dockerServerIp=localhost>, <tlsVerify=false>]",
 				Type:     "java.lang.AssertionError",
@@ -63,7 +63,7 @@ var _ = Describe("Parser", func() {
 
 			error := TestResult{
 				TestCase: "shouldSetServerIpWithLocalhostInCaseOfNativeLinuxInstallation",
-				Time:     "0.003",
+				Time:     0.003,
 				Kind:     ERROR,
 				Type:     "java.lang.NullPointerException:",
 				Details:  "java.lang.NullPointerException: null\n      at org.arquillian.cube.docker.impl.client.CubeConfiguratorTest.shouldSetServerIpWithLocalhostInCaseOfNativeLinuxInstallation(CubeConfiguratorTest.java:226)\n    ",
@@ -84,7 +84,7 @@ var _ = Describe("Parser", func() {
 			// given
 			filepath := getFilepath("multiple_test_failures_junit_surefire.xml")
 			expectedSummary := ExecutionSummary{
-				Total: 22, Failures: 2, Errors: 1, Skipped: 7, Time: "0.055", SystemOut: "CubeDockerConfiguration:\n  serverUri = tcp://localhost:4243\n  tlsVerify = false\n  dockerServerIp = localhost\n  definitionFormat = COMPOSE\n  clean = false\n  removeVolumes = true\n  dockerContainers = containers: {}\nnetworks: {}\n\n\nCubeDockerConfiguration:\n  serverUri = tcp://localhost:4243\n  tlsVerify = false\n  dockerServerIp = localhost\n  definitionFormat = COMPOSE\n  clean = false\n  removeVolumes = true\n  dockerContainers = containers: {}\nnetworks: {}\n\n\n", SystemErr: "",
+				Total: 22, Failures: 2, Errors: 1, Skipped: 7, Time: 0.055, SystemOut: "CubeDockerConfiguration:\n  serverUri = tcp://localhost:4243\n  tlsVerify = false\n  dockerServerIp = localhost\n  definitionFormat = COMPOSE\n  clean = false\n  removeVolumes = true\n  dockerContainers = containers: {}\nnetworks: {}\n\n\nCubeDockerConfiguration:\n  serverUri = tcp://localhost:4243\n  tlsVerify = false\n  dockerServerIp = localhost\n  definitionFormat = COMPOSE\n  clean = false\n  removeVolumes = true\n  dockerContainers = containers: {}\nnetworks: {}\n\n\n", SystemErr: "",
 			}
 			surefireParser := SurefireParser{}
 
@@ -100,7 +100,7 @@ var _ = Describe("Parser", func() {
 			filepath := getFilepath("multiple_test_failures_testng_surefire.xml")
 			results := []TestResult{{
 				TestCase: "bar",
-				Time:     "0.021",
+				Time:     0.021,
 				Kind:     FAILURE,
 				Type:     "java.lang.AssertionError",
 				Message:  "expected [foo] but found [2.0]",
@@ -108,14 +108,14 @@ var _ = Describe("Parser", func() {
 			},
 				{
 					TestCase: "exampleOfTestNgMaven",
-					Time:     "0",
+					Time:     0,
 					Kind:     PASSED,
 					Message:  "",
 					Details:  "",
 				},
 				{
 					TestCase: "foo",
-					Time:     "0.005",
+					Time:     0.005,
 					Kind:     FAILURE,
 					Type:     "java.lang.AssertionError",
 					Message:  "expected [foo] but found [1.0]",
@@ -123,7 +123,7 @@ var _ = Describe("Parser", func() {
 				},
 				{
 					TestCase: "testCaseSkipException",
-					Time:     "0.002",
+					Time:     0.002,
 					Kind:     SKIPPED,
 					Message:  "",
 					Details:  "",
@@ -132,8 +132,8 @@ var _ = Describe("Parser", func() {
 			expectedResult := &TestResults{
 				Name: "testNgMavenExample1.TestNgMavenExampleTest",
 				Summary: ExecutionSummary{
-					Total: 4, Failures: 2, Errors: 0, Skipped: 1, Time: "0.028", SystemOut: "Configuring TestNG with: org.apache.maven.surefire.testng.conf.TestNG652Configurator@3d82c5f3\n    Im in skip exception\n    ",
-					SystemErr: "",
+					Total: 4, Failures: 2, Errors: 0, Skipped: 1, Time: 0.028, SystemOut: "Configuring TestNG with: org.apache.maven.surefire.testng.conf.TestNG652Configurator@3d82c5f3\n    Im in skip exception\n    ",
+					SystemErr: "None\n    ",
 				},
 				Results: results}
 
@@ -174,7 +174,7 @@ var _ = Describe("Parser", func() {
 			filepath := getFilepath("gradle_single_test_error.xml")
 			f := []TestResult{{
 				TestCase: "test",
-				Time:     "0.003",
+				Time:     0.003,
 				Kind:     FAILURE,
 				Message:  "java.lang.AssertionError",
 				Type:     "java.lang.AssertionError",
@@ -183,7 +183,7 @@ var _ = Describe("Parser", func() {
 			expectedResult := &TestResults{
 				Name: "com.udacity.gradle.test.PersonTest",
 				Summary: ExecutionSummary{
-					Total: 1, Failures: 1, Errors: 0, Skipped: 0, Time: "0.003", SystemOut: "", SystemErr: "",
+					Total: 1, Failures: 1, Errors: 0, Skipped: 0, Time: 0.003, SystemOut: "AssertionError", SystemErr: "None",
 				},
 				Results: f}
 			gradleParser := GradleParser{}

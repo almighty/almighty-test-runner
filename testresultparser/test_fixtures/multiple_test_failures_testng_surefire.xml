@@ -28,5 +28,7 @@
     <skipped/>
     <system-out>Im in skip exception
     </system-out>
+    <system-err>None
+    </system-err>
   </testcase>
 </testsuite>
