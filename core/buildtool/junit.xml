@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-  <testsuite tests="4" failures="0" time="0.000470683">
-      <testcase name="Maven build tool Tool detection should support maven when pom.xml is found in the root directory of the project" classname="Build Tool Detectors Suite" time="0.00017026400000000002"></testcase>
-      <testcase name="Maven build tool Tool detection should not support maven when pom.xml not found in the root directory" classname="Build Tool Detectors Suite" time="9.808500000000001e-05"></testcase>
-      <testcase name="Maven build tool When maven is used should have default build command" classname="Build Tool Detectors Suite" time="1.2879000000000002e-05"></testcase>
-      <testcase name="Maven build tool When maven is used should get build command from configuration" classname="Build Tool Detectors Suite" time="2.759e-06"></testcase>
-  </testsuite>
