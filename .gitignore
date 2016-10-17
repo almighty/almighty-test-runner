@@ -76,4 +76,7 @@ vendor/
 *.coverprofile
 **/coverage-unit.out
 **/coverage-integration.out
+
+# Ignore Ginkgo junit.xml files
+*junit.xml
 /alm-test

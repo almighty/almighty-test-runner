@@ -5,9 +5,12 @@ import (
 	. "github.com/onsi/gomega"
 
 	"testing"
+
+	"github.com/onsi/ginkgo/reporters"
 )
 
 func TestDetectors(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Build Tool Detectors Suite")
+	junitReporter := reporters.NewJUnitReporter("junit.xml")
+	RunSpecsWithDefaultAndCustomReporters(t, "Build Tool Detectors Suite", []Reporter{junitReporter})
 }

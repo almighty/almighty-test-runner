@@ -49,6 +49,6 @@
 	at java.lang.Thread.run(Thread.java:745)
 </failure>
   </testcase>
-  <system-out><![CDATA[]]></system-out>
-  <system-err><![CDATA[]]></system-err>
+  <system-out><![CDATA[AssertionError]]></system-out>
+  <system-err><![CDATA[None]]></system-err>
 </testsuite>
