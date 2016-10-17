@@ -10,8 +10,8 @@ type report struct {
 	Skipped     int        `xml:"skipped,attr"`
 	Time        float64    `xml:"time,attr"`
 	TestResults []testCase `xml:"testcase"`
-	StdOut      string     `xml:"system-out",chardata`
-	StdErr      string     `xml:"system-err",chardata`
+	StdOut      string     `xml:"system-out" xml:"chardata"`
+	StdErr      string     `xml:"system-err" xml:"chardata"`
 }
 
 // surefireTestCase records information for each of the failing test case in XML Report
@@ -19,8 +19,8 @@ type testCase struct {
 	Name   string  `xml:"name,attr"`
 	Time   float64 `xml:"time,attr"`
 	Report []tag   `xml:",any"`
-	StdOut string  `xml:"system-out",chardata`
-	StdErr string  `xml:"system-err",chardata`
+	StdOut string  `xml:"system-out" xml:"chardata"`
+	StdErr string  `xml:"system-err" xml:"chardata"`
 }
 
 type tag struct {
