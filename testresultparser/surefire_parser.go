@@ -5,7 +5,7 @@ import (
 )
 
 // SurefireParser parses Maven Surefire test results into TestResults structure
-type SurefireParser struct {}
+type SurefireParser struct{}
 
 // Parse method does the actual Surefire XML Report parsing
 func (p *SurefireParser) Parse(filepath string) (*TestResults, error) {
@@ -17,5 +17,3 @@ func (p *SurefireParser) Parse(filepath string) (*TestResults, error) {
 	testResult := convertTestResultFromJUnitFormat(t)
 	return &testResult, nil
 }
-
-
