@@ -22,7 +22,7 @@ LDFLAGS="-X main.Commit=${COMMIT} -X main.BuildTime=${BUILD_TIME}"
 help: ## Get help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-10s\033[0m %s\n", $$1, $$2}'
 
-.PHONY: clean 
+.PHONY: clean
 clean: ## Removes binary
 	if [ -f ${BINARY} ] ; then rm ${BINARY} ; fi
 
@@ -34,16 +34,21 @@ test: ## Runs ginkgo tests
 watch: ## Continuously run tests whenever source code changes
 	ginkgo watch -r -p
 
-.PHONY: deps 
-deps: ## Fetches all dependencies using Glide
+.PHONY: install
+install: ## Fetches all dependencies using Glide
 	glide --verbose install
+
+.PHONY: up
+up: ## Updates all dependencies defined for glide
+	glide up
+
 
 .PHONY: check
 check: ## Concurrently runs a whole bunch of static analysis tools
 	gometalinter --vendor --deadline 100s ./...
 
-.PHONY: all 
-all: clean deps $(BINARY) test ## (default) Performs clean deps build test
+.PHONY: all
+all: clean install $(BINARY) test ## (default) Performs clean deps build test
 
 $(BINARY): $(SOURCES)
 	go build -v -ldflags ${LDFLAGS} -o ${BINARY}
