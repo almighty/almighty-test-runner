@@ -7,7 +7,7 @@ This repository consists of testing services provided by ALMighty.
 
 === Key features
 
-* Running project build in different configurations
+* Running project build in different configurations in isolated sets of docker containers
 
 Project itself depends on following tools, which are incorporated into the build process:
 
